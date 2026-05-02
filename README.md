@@ -26,5 +26,25 @@ I applied the three pillars of cybersecurity within this lab setup:
 - **Lab_Setup_Report.pdf:** Official report containing screenshots of the environment, Nmap scans, and Wireshark captures.
 - **5-Minute Walkthrough:** [Link to your LinkedIn Featured Video]
 
+
+## Task 3: Web Application Penetration Testing (DVWA)
+
+In this task, I performed security testing on a web application environment to identify and exploit common vulnerabilities.
+
+### 🛡️ Vulnerabilities Exploited
+* **SQL Injection (SQLi):** Used `' OR '1'='1` to bypass authentication and dump the user database.
+* **Cross-Site Scripting (XSS):**
+    * **Reflected:** Triggered immediate browser alerts via URL parameters.
+    * **Stored (Persistent):** Bypassed HTML character limits to inject a permanent script into the guestbook database.
+* **Cross-Site Request Forgery (CSRF):** Crafted a malicious URL to force a password change without user consent.
+* **Local File Inclusion (LFI):** Exploited path traversal to read sensitive system files (`/etc/passwd`).
+
+### 🛠️ Remediation & Defense
+* Configured PHP settings (`php.ini`) to enable/disable specific security flags.
+* Tested "Impossible" security levels to verify the effectiveness of **Anti-CSRF tokens**, **PDO Prepared Statements**, and **Input Sanitization**.
+
+[View Task 3 Report](./ApexPlanet_Task3_Report.pdf)
+
+
 ---
 *Submitted by: Fatimah Adnan* *ApexPlanet Internship Program - 2026*
