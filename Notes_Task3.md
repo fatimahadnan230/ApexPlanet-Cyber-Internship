@@ -1,6 +1,8 @@
-# Cybersecurity Lab: Task 3 - Web Application Security Notes
+# 📓 Task 3 Web Application Security Notes
+**Project:** Network Security & Scanning (Days 13–24)  
+**Status:** Completed & Verified  
+**Intern:** Fatimah Adnan
 
-This documentation covers the six core vulnerabilities analyzed within the DVWA environment, including exploitation mechanics and industry-standard mitigation strategies.
 
 ---
 
