@@ -1,4 +1,4 @@
-# 🛡️ ApexPlanet Cybersecurity Internship: Task 1
+# 🛡️ ApexPlanet Cybersecurity Internship
 > **Phase:** Foundation & Environment Setup  
 > **Timeline:** Days 1–12  
 > **Objective:** Establishing a virtualized penetration testing lab and demonstrating core security principles.
