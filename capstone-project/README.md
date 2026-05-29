@@ -57,6 +57,6 @@ Building zero-trust host perimeter firewall profiles using the Uncomplicated Fir
 Minimizing application attack boundaries by isolating, stopping, and masking unnecessary background services.
 
 🎥 Project Showcase Presentation
-Final Presentation Video: Watch the 12-Minute Technical Walkthrough
+Final Presentation Video: [Watch the 12-Minute Technical Walkthrough](https://www.linkedin.com/posts/fatimah-adnan-02118a325_cybersecurity-penetrationtesting-incidentresponse-ugcPost-7466178554167316480-P7lY/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFIS55kBJTMTk76BGqeXITeogXHimnPC0U8)
 
-Hosted Report Link: Access Interactive Documentation Portal
+Hosted Report Link: [Access Documentation Portal](https://github.com/fatimahadnan230/ApexPlanet-Cyber-Internship/blob/main/capstone-project/ApexPlanet%20Capstone%20Report.pdf)
