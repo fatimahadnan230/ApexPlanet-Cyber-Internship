@@ -21,3 +21,29 @@ execve("/usr/bin/whoami", ["whoami"], 0x7ffe6bfa...) = 0
 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
 write(1, "root\n", 5)
 exit_group(0)
+
+```
+
+# Step 1: Initialize emergency zero-trust host boundary rules
+
+```text
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw enable
+```
+
+# Step 2: Clean up background processes and disable the unneeded service vector
+
+```text
+sudo systemctl stop ModemManager
+sudo systemctl disable ModemManager
+sudo systemctl mask ModemManager
+```
+
+# Step 3: Verify the finalized zero-trust network operational posture
+
+```text
+sudo ufw status verbose
+```
